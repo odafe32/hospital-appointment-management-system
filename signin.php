@@ -120,13 +120,13 @@ if (isset($_POST["submit"])) {
 
 <head>
     <meta charset="utf-8">
-    <title>CBSA | Login</title>
+    <title>MediPro | Login</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+   <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -168,8 +168,8 @@ if (isset($_POST["submit"])) {
                 <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
                     <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
                         <div class="d-flex align-items-center justify-content-center flex-column mb-3">
-                            <a href="index.php" class="">
-                                <h3 class="text-primary">CBSA</h3>
+                            <a href="signin.php" class=" text-dark " style="font-size: 30px; font-weight:600;">
+                               <img src="assets/images/favicon.png" alt="" srcset=""> MediPro
                             </a>
                             <h3>Sign In</h3>
                         </div>
@@ -185,7 +185,7 @@ if (isset($_POST["submit"])) {
                                 <input type="password" name="password" class="form-control p-3" id="floatingPassword" placeholder="Password">
                                 <!-- <label for="floatingPassword">Password</label> -->
                             </div>
-                            <a href="" class="float-end mb-3">Forgot Password</a>
+                           
                             <button type="submit" name="submit" class="btn btn-primary py-3 w-100 mb-4">Sign In</button>
                         </form>
                         <p class="text-center mb-0">Don't have an Account? <a href="./student-signup.php">Sign Up</a></p>

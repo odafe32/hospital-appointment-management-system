@@ -92,7 +92,7 @@ if ($password_length < 6) {
 
 <head>
     <meta charset="utf-8">
-    <title>CBSA | Student's Sign-up</title>
+    <title>MediPro | Student's Sign-up</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -138,7 +138,7 @@ if ($password_length < 6) {
                     <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
                         <div class="d-flex align-items-center justify-content-center flex-column mb-3">
                             <a href="index.php" class="">
-                                <h3 class="text-primary">CBSA</h3>
+                                  <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>MediPro</h3>
                             </a>
                             <h3>Sign Up</h3>
                         </div>
@@ -184,7 +184,7 @@ if ($password_length < 6) {
 
                         </div>
                         
-                            <a href="" class="float-end mb-3">Forgot Password</a>
+                   
                         <button type="submit" name="submit" class="btn btn-primary py-3 w-100 mb-4">Sign Up</button>
                         </form>
                         <p class="text-center mb-0">Already have an Account? <a href="./signin.php">Sign In</a></p>
