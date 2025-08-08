@@ -133,7 +133,7 @@
 						<div class="col-lg-12">
 							<!-- Footer Copyright Start -->
 							<div class="footer-copyright-text">
-								<p>copyright 2024 © <span>MediPro</span> all right reserved.</p>
+								<p>copyright 2024 © <span>MeCare</span> all right reserved.</p>
 							</div>
 							<!-- Footer Copyright End -->
 						</div>
@@ -177,5 +177,5 @@
     <script src="js/function.js"></script>
 </body>
 
-<!-- Mirrored from demo.awaikenthemes.com/html-preview/medipro/ by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 29 Oct 2024 11:24:20 GMT -->
+<!-- Mirrored from demo.awaikenthemes.com/html-preview/MeCare/ by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 29 Oct 2024 11:24:20 GMT -->
 </html>

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="zxx">
 
-<!-- Mirrored from demo.awaikenthemes.com/html-preview/medipro/ by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 29 Oct 2024 11:23:42 GMT -->
+<!-- Mirrored from demo.awaikenthemes.com/html-preview/MeCare/ by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 29 Oct 2024 11:23:42 GMT -->
 <head>
 	<!-- Meta -->
 	<meta charset="utf-8">
@@ -12,7 +12,7 @@
 	<meta name="keywords" content="">
 	<meta name="author" content="Awaiken">
 	<!-- Page Title -->
-	<title>Blog | MediPro - Hospital  Management</title>
+	<title>Blog | MeCare - Hospital  Management</title>
 	<!-- Favicon Icon -->
 	<link rel="shortcut icon" type="image/x-icon" href="assets/assets/assets/images/favicon.png">
     <!-- Google Fonts css-->
@@ -426,7 +426,7 @@
 						<div class="col-lg-12">
 							<!-- Footer Copyright Start -->
 							<div class="footer-copyright-text">
-								<p>copyright 2024 © <span>MediPro</span> all right reserved.</p>
+								<p>copyright 2024 © <span>MeCare</span> all right reserved.</p>
 							</div>
 							<!-- Footer Copyright End -->
 						</div>
@@ -470,5 +470,5 @@
     <script src="assets/js/function.js"></script>
 </body>
 
-<!-- Mirrored from demo.awaikenthemes.com/html-preview/medipro/ by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 29 Oct 2024 11:24:20 GMT -->
+<!-- Mirrored from demo.awaikenthemes.com/html-preview/MeCare/ by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 29 Oct 2024 11:24:20 GMT -->
 </html>

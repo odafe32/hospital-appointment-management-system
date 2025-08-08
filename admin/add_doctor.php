@@ -135,7 +135,7 @@ if (isset($_SESSION["admin_id"])) {
           background-color: #f8f9fa;
         }
         .personal-card {   
-        max-width: 800px;
+        max-width: 1200px;
           margin: 50px auto;
           border-radius: 10px;
           box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
@@ -188,7 +188,7 @@ if (isset($_SESSION["admin_id"])) {
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
                 <a href="dashboard.php" class="navbar-brand mx-4 mb-3">
-                    <h3 class="text-primary">MediPro</h3>
+                    <h3 class="text-primary">MeCare</h3>
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="position-relative">
@@ -309,9 +309,9 @@ if (isset($_SESSION["admin_id"])) {
                 
 
 
-<div class="container mt-5">
+  <div class="container mt-5">
         <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
-            <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
+            <div class="col-12 col-sm-10 col-md-10 col-lg-6 col-xl-5">
                 <div class="bg-light rounded p-4 p-sm-5">
                     <div class="d-flex align-items-center justify-content-center flex-column mb-3">
                         <h3>Add Doctor</h3>
@@ -351,9 +351,7 @@ if (isset($_SESSION["admin_id"])) {
                 </div>
             </div>
         </div>
-</div>
-
-
+    </div>
         
                     
             
@@ -381,7 +379,7 @@ if (isset($_SESSION["admin_id"])) {
                 <div class="bg-light rounded-top p-4">
                     <div class="row">
                         <div class="col-12 col-sm-6 text-center text-sm-start">
-                            &copy; <a href="#">MediPro</a>, All Right Reserved. 
+                            &copy; <a href="#">MeCare</a>, All Right Reserved. 
                         </div>
                     </div>
                 </div>

@@ -90,7 +90,7 @@ if (isset($_SESSION["student_id"])) {
     <div class="sidebar pe-4 pb-3">
       <nav class="navbar bg-light navbar-light">
         <a href="dashboard.php" class="navbar-brand mx-4 mb-3">
- <h3 class="text-primary">MediPro</h3>
+ <h3 class="text-primary">MeCare</h3>
         </a>
         <div class="d-flex align-items-center ms-4 mb-4">
           <div class="position-relative">

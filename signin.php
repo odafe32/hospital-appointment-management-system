@@ -120,13 +120,13 @@ if (isset($_POST["submit"])) {
 
 <head>
     <meta charset="utf-8">
-    <title>MediPro | Login</title>
+    <title>MeCare | Login</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
 
     <!-- Favicon -->
-   <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">
+   <link rel="shortcut icon" href="asa/img/logo/logo.png" type="image/x-icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -169,7 +169,7 @@ if (isset($_POST["submit"])) {
                     <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
                         <div class="d-flex align-items-center justify-content-center flex-column mb-3">
                             <a href="signin.php" class=" text-dark " style="font-size: 30px; font-weight:600;">
-                               <img src="assets/images/favicon.png" alt="" srcset=""> MediPro
+                               <img src="asa/img/logo/logo.png" alt="" srcset="" width: 60px;> 
                             </a>
                             <h3>Sign In</h3>
                         </div>

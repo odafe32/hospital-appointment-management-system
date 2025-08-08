@@ -121,7 +121,7 @@ if (isset($_SESSION["doctor_id"])) {
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
                 <a href="dashboard.php" class="navbar-brand mx-4 mb-3">
- <h3 class="text-primary">MediPro</h3>
+ <h3 class="text-primary">MeCare</h3>
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="position-relative">
@@ -338,7 +338,7 @@ while ($searched_appt_fetch = mysqli_fetch_assoc($searched_appt)) {
                 <div class="bg-light rounded-top p-4">
                     <div class="row">
                         <div class="col-12 col-sm-6 text-center text-sm-start">
-                            &copy; <a href="#">MediPro</a>, All Right Reserved. 
+                            &copy; <a href="#">MeCare</a>, All Right Reserved. 
                         </div>
                     </div>
                 </div>
