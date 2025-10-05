@@ -105,7 +105,7 @@ if (isset($_SESSION["doctor_id"])) {
                         </div>
                     </div>
 
-                    <a href="report.php" class="nav-item nav-link"><i class="fas fa-comment me-2"></i>Report</a>
+                    <a href="feedback.php" class="nav-item nav-link"><i class="fas fa-comment me-2"></i>Feedbacks</a>
 
                     <a href="#" onclick="logout()" class="nav-item nav-link"> <i class="fas fa-sign-out-alt me-2"></i>
                         Logout</a>

@@ -160,7 +160,6 @@ if (isset($_SESSION["admin_id"])) {
                     
                     <a href="patient.php" class="nav-item nav-link"><i class="fas fa-comment me-2"></i>Patient</a>
 
-                    <a href="report.php" class="nav-item nav-link"><i class="fas fa-comment me-2"></i>Report</a>
 
                     <a href="#" onclick="logout()" class="nav-item nav-link"> <i class="fas fa-sign-out-alt me-2"></i>
                         Logout</a>

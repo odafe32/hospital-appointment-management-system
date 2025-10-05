@@ -89,7 +89,7 @@ if (isset($_SESSION["student_id"])) {
           </div>
           <div class="ms-3">
             <h6 class="mb-0"><?php echo $firstname . " " . $lastname; ?></h6>
-            <span>Student</span>
+            <span>Patient</span>
           </div>
         </div>
         <div class="navbar-nav w-100">
@@ -105,7 +105,7 @@ if (isset($_SESSION["student_id"])) {
           </div>
 
 
-          <a href="report.php" class="nav-item nav-link mb-5"><i class="fas fa-comment me-2"></i>Report</a>
+          <a href="feedback.php" class="nav-item nav-link mb-5"><i class="fas fa-comment me-2"></i>Feedbacks</a>
 
           <a href="#" onclick="logout()" class="nav-item nav-link mt-5"><i class="fas fa-sign-out-alt me-2"></i>Logout</a>
 
@@ -254,22 +254,49 @@ if (isset($_SESSION["student_id"])) {
         </button>
       </div>
       <div class="modal-body">
-        <p>Appointment ID: ' . $appointment_id . ' </p>
-        <p>Date: ' . $appointment_date . '</p>
-        <p>Time: ' . $appointment_time . '</p>
+        <p>Appointment ID: <?php echo $appointment_id; ?> </p>
+        <p>Date: <?php echo $appointment_date; ?></p>
+        <p>Time: <?php echo $appointment_time; ?></p>
       </div>
       <div class="modal-footer">
-        <a href="process-cancel-appointment.php?appointment_id=' . $appointment_id . '" class="btn btn-danger">Cancel Appointment</a>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelModal<?php echo $appointment_id; ?>" data-dismiss="modal">Cancel Appointment</button>
       </div>
     </div>
   </div>
 </div>
 <!--End of  Bootstrap Modal -->
 
+<!-- Cancellation Reason Modal -->
+<div class="modal fade" id="cancelModal<?php echo $appointment_id; ?>" tabindex="-1" role="dialog" aria-labelledby="cancelModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="cancelModalLabel" style="color: white;">Cancel Appointment</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="process-cancel-appointment.php" method="POST">
+        <div class="modal-body">
+          <input type="hidden" name="appointment_id" value="<?php echo $appointment_id; ?>">
+          <div class="form-group">
+            <label for="cancellation_reason">Please provide a reason for cancellation: <span class="text-danger">*</span></label>
+            <textarea class="form-control" id="cancellation_reason" name="cancellation_reason" rows="4" placeholder="Enter your reason for cancelling this appointment..." required></textarea>
+            <small class="form-text text-muted">This information will help us improve our services.</small>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-danger">Confirm Cancellation</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!--End of Cancellation Modal -->
 
        ';
             break;
-
 
           case 'APPROVED':
             echo '
@@ -291,7 +318,6 @@ if (isset($_SESSION["student_id"])) {
           </div>
         </div>
         
-        
         <!-- Bootstrap Modal -->
         <div class="modal fade" id="appointmentModal" tabindex="-1" role="dialog" aria-labelledby="appointmentModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
@@ -308,6 +334,7 @@ if (isset($_SESSION["student_id"])) {
               <p>Time: ' . $appointment_time . '</p>
               </div>
               <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelModalApproved<?php echo $appointment_id; ?>" data-dismiss="modal">Cancel Appointment</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               </div>
             </div>
@@ -315,9 +342,40 @@ if (isset($_SESSION["student_id"])) {
         </div>
         <!--End of  Bootstrap Modal -->
         
+        <!-- Cancellation Reason Modal for Approved -->
+        <div class="modal fade" id="cancelModalApproved<?php echo $appointment_id; ?>" tabindex="-1" role="dialog" aria-labelledby="cancelModalApprovedLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="cancelModalApprovedLabel">Cancel Approved Appointment</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <form action="process-cancel-appointment.php" method="POST">
+                <div class="modal-body">
+                  <input type="hidden" name="appointment_id" value="<?php echo $appointment_id; ?>">
+                  <div class="alert alert-warning">
+                    <strong>Warning!</strong> This appointment has already been approved by the doctor.
+                  </div>
+                  <div class="form-group">
+                    <label for="cancellation_reason_approved">Please provide a reason for cancellation: <span class="text-danger">*</span></label>
+                    <textarea class="form-control" id="cancellation_reason_approved" name="cancellation_reason" rows="4" placeholder="Enter your reason for cancelling this appointment..." required></textarea>
+                    <small class="form-text text-muted">This information will help us improve our services.</small>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-danger">Confirm Cancellation</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!--End of Cancellation Modal -->
+        
           ';
             break;
-
 
           case 'DECLINED':
             echo '
@@ -364,6 +422,25 @@ if (isset($_SESSION["student_id"])) {
             ';
             break;
 
+          case 'CANCELLED':
+            echo '
+            <div class="container" style="margin-top: 50px;">
+            <div class="row justify-content-center">
+              <div class="col-md-6">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title text-center">Your Appointment was Cancelled</h5>
+                    <p class="card-text">
+                      This appointment has been cancelled. You can book a new appointment if needed.
+                    </p>
+                    <a href="book-appointment.php" class="btn btn-primary">Book New Appointment</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>            
+            ';
+            break;
 
           default:
             echo '
@@ -447,6 +524,13 @@ if (isset($_SESSION["student_id"])) {
         window.location.href = "logout.php";
       }
     }
+
+    // Ensure modals work properly
+    $(document).ready(function() {
+      $('.modal').on('hidden.bs.modal', function () {
+        $(this).find('form')[0].reset();
+      });
+    });
   </script>
 </body>
 

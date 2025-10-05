@@ -145,7 +145,7 @@ if (isset($_SESSION["admin_id"])) {
                         </div>
                     </div>
 
-                    <a href="report.php" class="nav-item nav-link"><i class="fas fa-comment me-2"></i>Report</a>
+                    <a href="feedback-management.php" class="nav-item nav-link"><i class="fas fa-comment me-2"></i>Report</a>
 
                     <a href="#" onclick="logout()" class="nav-item nav-link"> <i class="fas fa-sign-out-alt me-2"></i>
                         Logout</a>

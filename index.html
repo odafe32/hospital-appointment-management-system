@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poultry Farm Economics - Lafia LGA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2ECC71 0%, #27AE60 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 40px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            border-left: 5px solid;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card.stats { border-left-color: #3498DB; }
+        .card.regression { border-left-color: #E74C3C; }
+        .card.comparison { border-left-color: #F39C12; }
+        .card.insights { border-left-color: #9B59B6; }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .card-icon {
+            font-size: 2.5em;
+            margin-right: 15px;
+        }
+        
+        .card-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #2C3E50;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .stat-item {
+            background: #F8F9FA;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #E9ECEF;
+        }
+        
+        .stat-number {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #2ECC71;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            color: #6C757D;
+            margin-top: 5px;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+            background: #F8F9FA;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .regression-line {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 40%, #E74C3C 45%, #E74C3C 55%, transparent 60%);
+            opacity: 0.8;
+        }
+        
+        .data-points {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .point {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #3498DB;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .chart-labels {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8em;
+            color: #6C757D;
+        }
+        
+        .comparison-bars {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        
+        .bar-group {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .bar {
+            width: 40px;
+            margin: 0 auto 10px;
+            border-radius: 5px 5px 0 0;
+            position: relative;
+        }
+        
+        .bar.with-knowledge {
+            background: #2ECC71;
+            height: 150px;
+        }
+        
+        .bar.without-knowledge {
+            background: #E74C3C;
+            height: 120px;
+        }
+        
+        .bar-label {
+            font-size: 0.9em;
+            margin-top: 10px;
+            color: #2C3E50;
+        }
+        
+        .insights-list {
+            list-style: none;
+        }
+        
+        .insights-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #E9ECEF;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .insights-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #2ECC71;
+            font-weight: bold;
+        }
+        
+        .regression-equation {
+            background: #2C3E50;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+        }
+        
+        .highlight {
+            background: #FFF3CD;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #F39C12;
+            margin: 15px 0;
+        }
+        
+        .farm-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+        }
+        
+        .chicken {
+            font-size: 2em;
+            margin: 0 5px;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+        
+        .currency {
+            color: #2ECC71;
+            font-weight: bold;
+        }
+        
+        .footer {
+            background: #2C3E50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🐔 POULTRY FARM ECONOMICS DASHBOARD</h1>
+            <p>Statistical Analysis on Poultry Farm Management - Lafia LGA, Nasarawa State</p>
+        </div>
+        
+        <div class="dashboard">
+            <!-- Key Statistics Card -->
+            <div class="card stats">
+                <div class="card-header">
+                    <div class="card-icon">📊</div>
+                    <div class="card-title">Farm Statistics Overview</div>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-number">60</span>
+                        <div class="stat-label">Total Farms Studied</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">2,481</span>
+                        <div class="stat-label">Average Flock Size</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number currency">₦254,880</span>
+                        <div class="stat-label">Average Production Cost</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number currency">₦356,827</span>
+                        <div class="stat-label">Average Returns</div>
+                    </div>
+                </div>
+                <div class="farm-visual">
+                    <span class="chicken">🐔</span>
+                    <span class="chicken">🐔</span>
+                    <span class="chicken">🐔</span>
+                    <span class="chicken">🐔</span>
+                    <span class="chicken">🐔</span>
+                </div>
+            </div>
+            
+            <!-- Regression Analysis Card -->
+            <div class="card regression">
+                <div class="card-header">
+                    <div class="card-icon">📈</div>
+                    <div class="card-title">Cost-Return Relationship</div>
+                </div>
+                <div class="chart-container">
+                    <div class="regression-line"></div>
+                    <div class="data-points">
+                        <div class="point" style="left: 15%; top: 25%;"></div>
+                        <div class="point" style="left: 25%; top: 35%;"></div>
+                        <div class="point" style="left: 35%; top: 40%;"></div>
+                        <div class="point" style="left: 45%; top: 50%;"></div>
+                        <div class="point" style="left: 55%; top: 55%;"></div>
+                        <div class="point" style="left: 65%; top: 65%;"></div>
+                        <div class="point" style="left: 75%; top: 70%;"></div>
+                        <div class="point" style="left: 85%; top: 80%;"></div>
+                    </div>
+                    <div class="chart-labels">
+                        <span>Low Cost</span>
+                        <span>High Cost</span>
+                    </div>
+                </div>
+                <div class="regression-equation">
+                    Returns = 1.421 × Cost - 5,338
+                </div>
+                <div class="highlight">
+                    <strong>R² = 0.949</strong> - The model explains 94.9% of variance in returns!
+                </div>
+            </div>
+            
+            <!-- Knowledge Comparison Card -->
+            <div class="card comparison">
+                <div class="card-header">
+                    <div class="card-icon">🎓</div>
+                    <div class="card-title">Knowledge Impact Analysis</div>
+                </div>
+                <div class="comparison-bars">
+                    <div class="bar-group">
+                        <div class="bar with-knowledge"></div>
+                        <div class="bar-label">
+                            <strong>With Prior Knowledge</strong><br>
+                            (65% of farmers)
+                        </div>
+                    </div>
+                    <div class="bar-group">
+                        <div class="bar without-knowledge"></div>
+                        <div class="bar-label">
+                            <strong>Without Prior Knowledge</strong><br>
+                            (35% of farmers)
+                        </div>
+                    </div>
+                </div>
+                <div class="highlight">
+                    📚 <strong>Education Level:</strong> Average 7 years of schooling<br>
+                    ⏱️ <strong>Experience:</strong> Average 6.9 years in poultry farming
+                </div>
+            </div>
+            
+            <!-- Key Insights Card -->
+            <div class="card insights">
+                <div class="card-header">
+                    <div class="card-icon">💡</div>
+                    <div class="card-title">Key Findings & Insights</div>
+                </div>
+                <ul class="insights-list">
+                    <li><strong>Highly Profitable:</strong> Every ₦1 invested returns ₦1.42</li>
+                    <li><strong>Strong Correlation:</strong> 94.9% of return variation explained by costs</li>
+                    <li><strong>Credit Access:</strong> 65% of farmers have access to credit</li>
+                    <li><strong>Scale Matters:</strong> Larger flocks show better economies of scale</li>
+                    <li><strong>Knowledge Premium:</strong> Prior experience improves outcomes</li>
+                    <li><strong>Market Potential:</strong> Strong profitability indicates viable sector</li>
+                </ul>
+                <div class="highlight">
+                    🎯 <strong>Recommendation:</strong> Support programs should focus on scaling operations, improving access to credit, and providing technical training to maximize returns.
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>📍 Study Location: Lafia Local Government Area, Nasarawa State, Nigeria</p>
+            <p>🔬 Statistical Methods: Regression Analysis & T-test | Sample Size: 60 farms</p>
+        </div>
+    </div>
+</body>
+</html>

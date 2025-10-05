@@ -109,7 +109,6 @@ if (isset($_SESSION["admin_id"])) {
                     
                     <a href="patient.php" class="nav-item nav-link"><i class="fas fa-comment me-2"></i>Patient</a>
 
-                    <a href="report.php" class="nav-item nav-link"><i class="fas fa-comment me-2"></i>Report</a>
 
                     <a href="#" onclick="logout()" class="nav-item nav-link"> <i class="fas fa-sign-out-alt me-2"></i>
                         Logout</a>
@@ -190,14 +189,13 @@ if (isset($_SESSION["admin_id"])) {
         
 
 
-
-
             <!-- Inner Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-light text-center rounded p-4">
 
                 <div class="container mt-5">
-    <h2 class="mb-4">Cancelled appointments</h2>
+    <h2 class="mb-4">Cancelled Appointments</h2>
+    <p class="text-muted mb-4">Appointments cancelled by students with their reasons</p>
     <div class="row">
         <form class="col-sm-4 ms-auto d-flex mb-5" action="search.php" method="get">
             <input class="form-control border-0" type="search" name="search" placeholder="Search">
@@ -214,41 +212,49 @@ if (isset($_SESSION["admin_id"])) {
                     <th scope="col">Date</th>
                     <th scope="col">Time</th>
                     <th scope="col">Status</th>
+                    <th scope="col">Cancellation Reason</th>
                 </tr>
             </thead>
             <tbody>
             <?php
-//Fetching number of declined appointment per status
-$pending_appt = mysqli_query($connect,"SELECT * FROM `appointment` INNER JOIN `student` ON appointment.student_id = student.student_id WHERE appointment_status = 'declined'");
+//Fetching cancelled appointments (CANCELLED status)
+$cancelled_appt = mysqli_query($connect,"SELECT * FROM `appointment` INNER JOIN `student` ON appointment.student_id = student.student_id WHERE appointment_status = 'CANCELLED' ORDER BY booking_time DESC");
     
-
-                while ($pending_appt_fetch = mysqli_fetch_assoc($pending_appt)) {
-                    $patient_firstname = $pending_appt_fetch["firstname"];
-                    $patient_lastname = $pending_appt_fetch["lastname"];
-                    if (isset($pending_appt_fetch["othername"])) {
-                        $patient_othername = $pending_appt_fetch["othername"];
+                while ($cancelled_appt_fetch = mysqli_fetch_assoc($cancelled_appt)) {
+                    $patient_firstname = htmlspecialchars($cancelled_appt_fetch["firstname"]);
+                    $patient_lastname = htmlspecialchars($cancelled_appt_fetch["lastname"]);
+                    if (isset($cancelled_appt_fetch["othername"])) {
+                        $patient_othername = htmlspecialchars($cancelled_appt_fetch["othername"]);
                     }else{
-                        $patient_othername = null;
+                        $patient_othername = "";
                     }
-                    $appointment_id = $pending_appt_fetch["appointment_id"];
-                    $appointment_date = $pending_appt_fetch["appointment_date"];
+                    $appointment_id = htmlspecialchars($cancelled_appt_fetch["appointment_id"]);
+                    $appointment_date = htmlspecialchars($cancelled_appt_fetch["appointment_date"]);
                     //Modifying appointment date
                     $appointment_date = strtotime($appointment_date);
                     $appointment_date = date("D, d-M-Y",$appointment_date);
                     
-                    $appointment_time = $pending_appt_fetch["appointment_time"];
+                    $appointment_time = htmlspecialchars($cancelled_appt_fetch["appointment_time"]);
                     //Modifying appointment time
                     $appointment_time = strtotime($appointment_time);
                     $appointment_time = date("h:i:s a",$appointment_time);
-                    $appointment_status = $pending_appt_fetch["appointment_status"];
+                    $appointment_status = htmlspecialchars($cancelled_appt_fetch["appointment_status"]);
+                    $cancellation_reason = htmlspecialchars($cancelled_appt_fetch["cancellation_reason"] ?? "No reason provided");
 
                     echo '
                     <tr>
-                        <td>'.$patient_firstname . " " . $patient_lastname . " ".$patient_othername.' </td>
-                        <td>'. $appointment_id  .'</td>
-                        <td>'. $appointment_date  .'</td>
-                        <td>'. $appointment_time  .'</td>
-                        <td class="text-danger">'. $appointment_status  .'</td>
+                        <td>'.htmlspecialchars($patient_firstname . " " . $patient_lastname . " " . $patient_othername).'</td>
+                        <td>'. htmlspecialchars($appointment_id)  .'</td>
+                        <td>'. htmlspecialchars($appointment_date)  .'</td>
+                        <td>'. htmlspecialchars($appointment_time)  .'</td>
+                        <td><span class="badge bg-secondary">'. htmlspecialchars($appointment_status)  .'</span></td>
+                        <td>';
+                    if ($cancellation_reason != "No reason provided") {
+                        echo '<span title="' . htmlspecialchars($cancellation_reason) . '">' . htmlspecialchars(substr($cancellation_reason, 0, 30)) . (strlen($cancellation_reason) > 30 ? '...' : '') . '</span>';
+                    } else {
+                        echo '<span class="text-muted">No reason provided</span>';
+                    }
+                    echo '</td>
                     </tr>
                     ';
                 
@@ -263,7 +269,6 @@ $pending_appt = mysqli_query($connect,"SELECT * FROM `appointment` INNER JOIN `s
         </div>
             </div>
             <!-- Inner End -->
-
             
 
 

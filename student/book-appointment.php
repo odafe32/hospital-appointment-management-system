@@ -202,7 +202,7 @@ if (isset($_SESSION["student_id"])) {
                     </div>
                     <div class="ms-3">
                         <h6 class="mb-0"><?php echo $firstname . " " . $lastname; ?></h6>
-                        <span>Student</span>
+                        <span>Patient</span>
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
@@ -218,7 +218,7 @@ if (isset($_SESSION["student_id"])) {
                     </div>
 
 
-                    <a href="report.php" class="nav-item nav-link mb-5"><i class="fas fa-comment me-2"></i>Report</a>
+                    <a href="feedback.php" class="nav-item nav-link mb-5"><i class="fas fa-comment me-2"></i>Feedbacks</a>
 
                     <a href="#" onclick="logout()" class="nav-item nav-link mt-5"><i class="fas fa-sign-out-alt me-2"></i>Logout</a>
 

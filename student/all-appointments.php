@@ -99,7 +99,7 @@ if (isset($_SESSION["student_id"])) {
           </div>
           <div class="ms-3">
             <h6 class="mb-0"><?php echo $firstname . " " . $lastname; ?></h6>
-            <span>Student</span>
+            <span>Patient</span>
           </div>
         </div>
         <div class="navbar-nav w-100">
@@ -115,7 +115,7 @@ if (isset($_SESSION["student_id"])) {
           </div>
 
 
-          <a href="report.php" class="nav-item nav-link mb-5"><i class="fas fa-comment me-2"></i>Report</a>
+          <a href="feedback.php" class="nav-item nav-link mb-5"><i class="fas fa-comment me-2"></i>Feedbacks</a>
 
           <a href="#" onclick="logout()" class="nav-item nav-link mt-5"><i class="fas fa-sign-out-alt me-2"></i>Logout</a>
 
@@ -333,7 +333,6 @@ if (isset($_SESSION["student_id"])) {
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-
               <div class="modal-body">
                 <div class="table-responsive">
                   <table class="table table-striped">
@@ -344,15 +343,20 @@ if (isset($_SESSION["student_id"])) {
                         <th scope="col">Date</th>
                         <th scope="col">Time</th>
                         <th scope="col">Status</th>
+                        <th scope="col">Action</th>
                       </tr>
                     </thead>
                     <tbody>
 
                       <?php
                       //Selecting All appointments from DB
-                      $all_appt = mysqli_query($connect, "SELECT * FROM `appointment` INNER JOIN student ON appointment.student_id = student.student_id WHERE appointment.student_id = $user_id");
+                      $all_appt = mysqli_query($connect, "SELECT * FROM `appointment` INNER JOIN student ON appointment.student_id = student.student_id WHERE appointment.student_id = $user_id ORDER BY appointment.booking_time DESC");
+                      
+                      $appointments_data = []; // Store appointment data for modals
 
                       while ($all_appt_row = mysqli_fetch_row($all_appt)) {
+                        // Store data for modal generation
+                        $appointments_data[] = $all_appt_row;
                         $all_appt_fullname = $all_appt_row["9"] . " " . $all_appt_row["10"];
                         $all_appt_appointment_id = $all_appt_row["0"];
                         $all_appt_appointment_date = $all_appt_row["4"];
@@ -376,18 +380,27 @@ if (isset($_SESSION["student_id"])) {
                         switch ($all_appt_appointment_status) {
                           case 'PENDING':
                             echo '<td><span class="text-warning">' . $all_appt_appointment_status . '</span></td>';
+                            echo '<td><button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#cancelModalAll' . $all_appt_appointment_id . '">Cancel</button></td>';
                             break;
 
                           case 'APPROVED':
                             echo '<td><span class="text-success">' . $all_appt_appointment_status . '</span></td>';
+                            echo '<td><button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#cancelModalAll' . $all_appt_appointment_id . '">Cancel</button></td>';
                             break;
 
                           case 'DECLINED':
                             echo '<td><span class="text-danger">' . $all_appt_appointment_status . '</span></td>';
+                            echo '<td><span class="text-muted">N/A</span></td>';
+                            break;
+
+                          case 'CANCELLED':
+                            echo '<td><span class="text-secondary">' . $all_appt_appointment_status . '</span></td>';
+                            echo '<td><span class="text-muted">N/A</span></td>';
                             break;
 
                           default:
-                            # code...
+                            echo '<td><span class="text-muted">' . $all_appt_appointment_status . '</span></td>';
+                            echo '<td><span class="text-muted">N/A</span></td>';
                             break;
                         }
 
@@ -400,13 +413,57 @@ if (isset($_SESSION["student_id"])) {
                   </table>
                 </div>
               </div>
-            </div>
-
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
             </div>
           </div>
         </div>
+        
+        <!-- Cancellation Modals for All Appointments -->
+        <?php
+        // Generate cancellation modals for each appointment
+        foreach ($appointments_data as $appt_data) {
+          $modal_appt_id = $appt_data["0"];
+          $modal_appt_status = $appt_data["6"];
+
+          // Only create modals for PENDING and APPROVED appointments
+          if ($modal_appt_status == 'PENDING' || $modal_appt_status == 'APPROVED') {
+            $warning_text = ($modal_appt_status == 'APPROVED') ? '<div class="alert alert-warning"><strong>Warning!</strong> This appointment has already been approved by the doctor.</div>' : '';
+
+            echo '
+            <div class="modal fade" id="cancelModalAll' . $modal_appt_id . '" tabindex="-1" role="dialog" aria-labelledby="cancelModalAllLabel' . $modal_appt_id . '" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="cancelModalAllLabel' . $modal_appt_id . '">Cancel Appointment</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <form action="process-cancel-appointment.php" method="POST">
+                    <div class="modal-body">
+                      <input type="hidden" name="appointment_id" value="' . $modal_appt_id . '">
+                      ' . $warning_text . '
+                      <div class="form-group">
+                        <label for="cancellation_reason_' . $modal_appt_id . '">Please provide a reason for cancellation: <span class="text-danger">*</span></label>
+                        <textarea class="form-control" id="cancellation_reason_' . $modal_appt_id . '" name="cancellation_reason" rows="4" placeholder="Enter your reason for cancelling this appointment..." required></textarea>
+                        <small class="form-text text-muted">This information will help us improve our services.</small>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-danger">Confirm Cancellation</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            ';
+          }
+        }
+        ?>
+        <!-- End of Cancellation Modals -->
       </div>
 
 
@@ -451,6 +508,13 @@ if (isset($_SESSION["student_id"])) {
         window.location.href = "logout.php";
       }
     }
+
+    // Ensure modals work properly
+    $(document).ready(function() {
+      $('.modal').on('hidden.bs.modal', function () {
+        $(this).find('form')[0].reset();
+      });
+    });
   </script>
 </body>
 
